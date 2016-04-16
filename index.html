@@ -11,6 +11,7 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/axios/0.9.1/axios.js"></script>
   <script src="//api.mapbox.com/mapbox.js/plugins/leaflet-hash/v0.2.1/leaflet-hash.js"></script>
   <script src="leaflet-tilelayer-cmp.js"></script>
+  <script src="leaflet-gsi-anno.js"></script>
   <style>
     body {
       width: 100%;
@@ -67,6 +68,7 @@
       var right = a[1].data.layers[0];
       document.getElementById("right").innerHTML = right.title;
       document.getElementById("left").innerHTML = left.title;
+
       var map = L.map("map", {
         maxZoom: 20,
         minZoom: 2,
@@ -74,7 +76,8 @@
         center: [32.711225, 130.673554],
         layers: [
           L.tileLayer(right.url, right),
-          L.tileLayer.cmp(left.url, left)
+          L.tileLayer.cmp(left.url, left),
+          new L.GSIAnnoLayer()
         ]
       });
       map.zoomControl.setPosition("bottomright");
