@@ -1,0 +1,19 @@
+{
+  "name": "leaflet-tilelayer-cmp",
+  "version": "1.0.0",
+  "description": "leaflet1.0b plugin to clip and swipe tilelayer",
+  "main": "leaflet-tilelayer-cmp.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frogcat/leaflet-tilelayer-cmp.git"
+  },
+  "author": "frogcat",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/frogcat/leaflet-tilelayer-cmp/issues"
+  },
+  "homepage": "https://github.com/frogcat/leaflet-tilelayer-cmp#readme"
+}

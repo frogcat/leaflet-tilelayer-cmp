@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>sandmaps cmp</title>
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0" />
+  <link rel="stylesheet" href="//cdn.leafletjs.com/leaflet/v1.0.0-beta.2/leaflet.css" />
+  <script src="//cdn.jsdelivr.net/es6-promise/3.1.2/es6-promise.min.js"></script>
+  <script src="//cdn.leafletjs.com/leaflet/v1.0.0-beta.2/leaflet.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/axios/0.9.1/axios.js"></script>
+  <script src="//api.mapbox.com/mapbox.js/plugins/leaflet-hash/v0.2.1/leaflet-hash.js"></script>
+  <script src="leaflet-tilelayer-cmp.js"></script>
+  <style>
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #map {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      maring: 0;
+      padding: 0;
+    }
+
+    #left {
+      left: 0;
+    }
+
+    #right {
+      right: 0;
+    }
+
+    .layer-name {
+      position: absolute;
+      top: 0;
+      width: auto;
+      height: auto;
+      z-index: 20000;
+      font-size: 10pt;
+      background: black;
+      color: white;
+      padding: 4px;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+  <div id="left" class="layer-name"></div>
+  <div id="right" class="layer-name"></div>
+  <script>
+    if (!location.search.match(/^\?([0-9a-zA-Z_]+),([0-9a-zA-Z_]+)$/))
+      location.search = "?20160414kumamoto_0415dol2,ort";
+
+    Promise.all([
+      axios.get("http://frogcat.github.io/layers/" + RegExp.$1 + ".txt"),
+      axios.get("http://frogcat.github.io/layers/" + RegExp.$2 + ".txt")
+    ]).then(function(a) {
+      var left = a[0].data.layers[0];
+      var right = a[1].data.layers[0];
+      document.getElementById("right").innerHTML = right.title;
+      document.getElementById("left").innerHTML = left.title;
+      var map = L.map("map", {
+        maxZoom: 20,
+        minZoom: 2,
+        zoom: 15,
+        center: [32.711225, 130.673554],
+        layers: [
+          L.tileLayer(right.url, right),
+          L.tileLayer.cmp(left.url, left)
+        ]
+      });
+      map.zoomControl.setPosition("bottomright");
+      L.hash(map);
+    });
+  </script>
+</body>
+
+</html>
